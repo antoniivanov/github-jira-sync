@@ -58,7 +58,7 @@ The GitHub-Jira Issue Sync Application will be built using the following archite
 - Jira API
 - Scheduled jobs using cron or similar scheduler (possibly Super Collider Data Jobs)
 
-The application will consist of three main components:
+The application will consist of those main components:
 
 1. GitHub Issue Connection to interact with the GitHub repository and retrieve relevant issue data.
 2. Jira Issue Connection to interact with the Jira project and retrieve relevant issue data.
