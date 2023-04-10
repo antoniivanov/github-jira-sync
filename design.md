@@ -47,6 +47,7 @@ The application should be able to perform the following tasks:
     1. Note: There are SyncStrategy that can be extended with other conflict resolution logic. Currently it's github overwrites jira.
 15. (todo) Create python package that can be installed and used as a library
 16. (todo) create data job that can be used to run the sync application
+17. (todo) create some cicd to run tests and deploy the package in pypi
     
 # Architecture
 
