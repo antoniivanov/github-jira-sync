@@ -13,9 +13,7 @@ The application should be able to perform the following tasks:
 
 - Authentication: The application must be able to authenticate with both the GitHub and Jira APIs to retrieve data and make changes.
 - Configuration: The application shall allow for configuration of the following parameters:
-    - GitHub repository and Jira project names/URLs
-    - Mappings of attributes between GitHub and Jira issues
-    - Sync direction
+    - GitHub repository and Jira project names/URLs 
     - Synchronization schedule
 - Issue Retrieval: The application should be able to retrieve issues from both platforms using their respective APIs.
 - Issue Comparison: The application should compare the issues from both platforms to identify which ones need to be synced.
