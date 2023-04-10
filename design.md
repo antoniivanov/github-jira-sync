@@ -39,15 +39,14 @@ The application should be able to perform the following tasks:
 8. (done) The application shall work on a configurable schedule.
    1. Note: rely on external scheduler (cron, Super Collider Data Jobs)
 9. (non goal) The application shall provide configurable mappings of attributes between the two systems.
-10. (?) The application shall handle outages or downtime of one or both systems gracefully.
-11. (non goal)The application shall consolidate changes in issues if there are changes on both systems.
+10. (todo) Create some cicd to run tests and deploy the application (python distribution) in pypi .
+11. (non goal) The application shall consolidate changes in issues if there are changes on both systems.
 12. (todo: testing) The application shall be able to handle 50 updated (or newly created) issues per day without slowing down or crashing.
 13. (todo: testing) The application shall be able to handle outages or downtime of either platform and resume syncing when the platforms are back online.
 14. (not goal) The application shall be able to handle conflicts when changes are made to the same issue on both platforms.
     1. Note: There are SyncStrategy that can be extended with other conflict resolution logic. Currently it's github overwrites jira.
 15. (todo) Create python package that can be installed and used as a library
-16. (todo) create data job that can be used to run the sync application
-17. (todo) create some cicd to run tests and deploy the package in pypi
+16. (todo) create data job that can be used to run the sync application 
     
 # Architecture
 
