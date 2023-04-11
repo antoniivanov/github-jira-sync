@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from issues_sync.file_state import InFileState
 from issues_sync.finder import Finder
@@ -32,10 +33,13 @@ class SyncEngine:
         log.info(f"Last sync time: {sync_time}")
         github_issues = self._github.get_issues(sync_time)
         log.info(f"Found {len(github_issues)} github issues to sync")
+        github_issues.sort(key=lambda x: x.updated_at if x.updated_at is not None else datetime.min)
 
         for github_issue in github_issues:
             try:
                 self._sync_issue(github_issue)
+                if github_issue.updated_at is not None:
+                    self._state.update_last_sync_time(github_issue.updated_at)
             except Exception as e:
                 log.error(f"Failed to sync github issue {github_issue.key}: {e}")
 

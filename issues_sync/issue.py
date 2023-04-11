@@ -39,7 +39,7 @@ class BaseIssueComment:
 @dataclass
 class BaseIssue:
     key: str
-    project: BaseIssueField[str]
+    project: str
     title: BaseIssueField[str]
     description: BaseIssueField[str]
     status: BaseIssueField[BaseIssueStatus] = BaseIssueStatus.OPEN

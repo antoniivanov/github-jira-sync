@@ -11,15 +11,20 @@ from test_utils import InMemoryState
 
 CURRENT_TIME = datetime.datetime.now().isoformat()
 
-github_id_test_ussue_1 = 954
+github_id_test_ussue_1 = "954"
+github_id_test_ussue_2 = "1179"
 
 
 def decorate_get_issues(github_connection, func):
     def wrapper(*args, **kwargs):
-        return [github_connection.get_issue(github_id_test_ussue_1), github_connection.get_issue(1179)]
+        return [github_connection.get_issue(github_id_test_ussue_1),
+                github_connection.get_issue(github_id_test_ussue_2)]
 
-    issue = github_connection._repo.get_issue(github_id_test_ussue_1)
+    issue = github_connection._repo.get_issue(int(github_id_test_ussue_1))
     issue.edit(body=f"This is a test issue 1. Time: {CURRENT_TIME}")
+
+    issue = github_connection._repo.get_issue(int(github_id_test_ussue_2))
+    issue.edit(body=f"This is a test issue 2. Time: {CURRENT_TIME}")
 
     return wrapper
 
@@ -58,3 +63,20 @@ class TestSyncEnd2End:
         jira_key = state.get_jira_issue(github_id_test_ussue_1)
         assert jira_key is not None
         assert f"This is a test issue 1. Time: {CURRENT_TIME}" in jira_connection.get_issue(jira_key).description.value
+
+        jira_key = state.get_jira_issue(github_id_test_ussue_2)
+        assert jira_key is not None
+        assert f"This is a test issue 2. Time: {CURRENT_TIME}" in jira_connection.get_issue(jira_key).description.value
+
+        issue = github_connection._repo.get_issue(int(github_id_test_ussue_1))
+        issue.edit(body=f"This is a test issue 1. Updated.")
+
+        sync_engine.sync()
+
+        jira_key = state.get_jira_issue(github_id_test_ussue_1)
+        assert jira_key is not None
+        assert f"This is a test issue 1. Updated." in jira_connection.get_issue(jira_key).description.value
+
+        jira_key = state.get_jira_issue(github_id_test_ussue_2)
+        assert jira_key is not None
+        assert f"This is a test issue 2. Time: {CURRENT_TIME}" in jira_connection.get_issue(jira_key).description.value

@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 def convert_to_base_issue(github_issue: github.Issue.Issue) -> BaseIssue:
     id = str(github_issue.number)
-    project = BaseIssueField(github_issue.repository.name, github_issue.repository.updated_at)
+    project = github_issue.repository.name
     title = BaseIssueField(github_issue.title, github_issue.updated_at)
     description = BaseIssueField(github_issue.body, github_issue.updated_at)
     comments = []
@@ -22,6 +22,12 @@ def convert_to_base_issue(github_issue: github.Issue.Issue) -> BaseIssue:
         comment = BaseIssueComment(body, user, github_comment.updated_at)
         comments.append(comment)
     updated_at = github_issue.updated_at
+    if github_issue.updated_at is None:
+        updated_at = github_issue.closed_at
+    if github_issue.updated_at is None:
+        updated_at = github_issue.created_at
+    if github_issue.updated_at is None:
+        updated_at = github_issue.milestone.updated_at
     status = BaseIssueField(BaseIssueStatus(github_issue.state.upper()), github_issue.updated_at)
     html_url = github_issue.html_url
     return BaseIssue(id, project, title, description, status, comments, updated_at, html_url)

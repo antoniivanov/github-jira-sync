@@ -42,8 +42,7 @@ def test_convert_to_base_issue(mock_github_issue):
     base_issue = convert_to_base_issue(mock_github_issue)
     assert isinstance(base_issue, BaseIssue)
     assert base_issue.key == str(mock_github_issue.number)
-    assert base_issue.project.value == mock_github_issue.repository.name
-    assert base_issue.project.updated_at == mock_github_issue.repository.updated_at
+    assert base_issue.project == mock_github_issue.repository.name
     assert base_issue.title.value == mock_github_issue.title
     assert base_issue.title.updated_at == mock_github_issue.updated_at
     assert base_issue.description.value == mock_github_issue.body
