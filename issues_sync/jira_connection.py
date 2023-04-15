@@ -138,5 +138,8 @@ class JiraConnection:
             for base_comment in base_comments[base_index:]:
                 self._jira.add_comment(jira_issue.key, base_comment.body.value)
 
-        # TODO: what if we have less github comments than jira comments?
-        # if jira_index < len(jira_comments):
+        # delete leftover comments
+        if jira_index < len(jira_comments):
+            for jira_comment in jira_comments[jira_index:]:
+                jira_comment.delete()
+

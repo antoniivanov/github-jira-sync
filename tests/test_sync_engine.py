@@ -1,10 +1,10 @@
-from unittest.mock import Mock, MagicMock
+from unittest.mock import Mock
 
 import pytest
 
 from issues_sync.issue import BaseIssue, BaseIssueField
 from issues_sync.sync_engine import SyncEngine
-from test_utils import InMemoryState
+from issues_sync.utils import InMemoryState
 
 
 class TestSyncEngine:
