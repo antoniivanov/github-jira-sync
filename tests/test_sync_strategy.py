@@ -13,7 +13,7 @@ from issues_sync.sync_strategy import GithubToJiraSyncStrategy
 def jira_issue():
     return BaseIssue(
         key="JIRA-123",
-        project=BaseIssueField("JIRA"),
+        project="JIRA",
         title=BaseIssueField("Test Issue"),
         description=BaseIssueField("This is a test issue."),
         status=BaseIssueField(BaseIssueStatus.OPEN),
@@ -27,7 +27,7 @@ def jira_issue():
 def github_issue():
     return BaseIssue(
         key="456",
-        project=BaseIssueField("github"),
+        project="github",
         title=BaseIssueField("Test Issue"),
         description=BaseIssueField("This is a test issue."),
         status=BaseIssueField(BaseIssueStatus.OPEN),
@@ -87,7 +87,7 @@ Only status and labels can be changed.
     assert jira_issue.status.value == github_issue.status.value
 
 
-def test_update_updates_jira_issue_comments(jira_issue, github_issue, sync_strategy):
+def test_update_creates_jira_issue_comments(jira_issue, github_issue, sync_strategy):
     # Arrange
 
     # Act
@@ -96,7 +96,9 @@ def test_update_updates_jira_issue_comments(jira_issue, github_issue, sync_strat
     # Assert
     assert len(jira_issue.comments) == 2
     assert jira_issue.comments[0].body.value.strip() == "user1 wrote on GitHub:\nTest comment 1."
+    assert jira_issue.comments[0].user.value == "user1"
     assert jira_issue.comments[1].body.value.strip() == "user2 wrote on GitHub:\nTest comment 2."
+    assert jira_issue.comments[1].user.value == "user2"
 
 
 def test_update_jira_issue_status_both_open(jira_issue, github_issue, sync_strategy):

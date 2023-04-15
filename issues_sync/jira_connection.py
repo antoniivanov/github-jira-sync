@@ -125,11 +125,10 @@ class JiraConnection:
             jira_comment = jira_comments[jira_index]
             base_comment = base_comments[base_index]
 
-            body = self._get_comment_body(base_comment)
             fields = {
-                "body": body
+                "body": base_comment.body.value
             }
-            jira_comment.update(fields=fields, jira=self._jira)
+            jira_comment.update(jira=self._jira, body=base_comment.body.value)
 
             jira_index += 1
             base_index += 1
@@ -137,16 +136,7 @@ class JiraConnection:
         if base_index < len(base_comments):
             # Add new comments
             for base_comment in base_comments[base_index:]:
-                body = self._get_comment_body(base_comment)
-                self._jira.add_comment(jira_issue.key, body)
+                self._jira.add_comment(jira_issue.key, base_comment.body.value)
 
         # TODO: what if we have less github comments than jira comments?
         # if jira_index < len(jira_comments):
-
-    @staticmethod
-    def _get_comment_body(base_comment):
-        if base_comment.user is not None:
-            body = f"{base_comment.user.value} wrote:\n{base_comment.body.value}"
-        else:
-            body = base_comment.body.value
-        return body

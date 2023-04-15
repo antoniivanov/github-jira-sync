@@ -66,7 +66,7 @@ Only status and labels can be changed.
 {github_comment.user.value} wrote on GitHub:
 {github_comment.body.value}
             """
-            new_comments.append(BaseIssueComment(body, github_comment.updated_at))
+            new_comments.append(BaseIssueComment(body, github_comment.user, github_comment.updated_at))
         jira_issue.comments = new_comments
 
     def create_jira_issue(self, github_issue: BaseIssue) -> str:
