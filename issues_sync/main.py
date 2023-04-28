@@ -19,7 +19,7 @@ def main():
     jira = JiraConnection(config.jira)
     update_strategy = GithubToJiraSyncStrategy(jira, github)
 
-    sync_engine = SyncEngine(github, jira, update_strategy)
+    sync_engine = SyncEngine(github, jira, update_strategy, dry_run=config.dry_run)
     sync_engine.sync()
 
 

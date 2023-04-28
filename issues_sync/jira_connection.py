@@ -36,7 +36,7 @@ class JiraConnection:
 
     def _convert_to_base_issue(self, jira_issue: Issue) -> BaseIssue:
         id = str(jira_issue.key)
-        project = BaseIssueField(jira_issue.fields.project.name, jira_issue.fields.updated)
+        project = jira_issue.fields.project.name
         title = BaseIssueField(jira_issue.fields.summary, jira_issue.fields.updated)
         description = BaseIssueField(jira_issue.fields.description, jira_issue.fields.updated)
         comments = []
@@ -83,10 +83,9 @@ class JiraConnection:
         log.info(f"Creating issue {issue}")
 
         fields = {
-            "project": {"key": issue.project.value},
+            "project": self._project,
             "summary": issue.title.value,
             "description": issue.description.value,
-            "status": {"name": "New"},
             "issuetype": {"name": "Story"},
         }
 

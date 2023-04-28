@@ -42,6 +42,7 @@ class SyncEngine:
                     self._state.update_last_sync_time(github_issue.updated_at)
             except Exception as e:
                 log.error(f"Failed to sync github issue {github_issue.key}: {e}")
+                raise e
 
     def _sync_issue(self, github_issue: BaseIssue):
         log.info(f"Sync issue {github_issue.key}")
