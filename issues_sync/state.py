@@ -26,13 +26,13 @@ class State:
     @abstractmethod
     def get_last_sync_time(self) -> datetime.datetime:
         """
-        Returns the last time the sync engine was run
+        Returns the last time (in UTC) the sync engine was run
         """
 
     @abstractmethod
     def update_last_sync_time(self, sync_time: datetime.datetime):
         """
-        Updates the last sync time
+        Updates the last sync time (in UTC)
         """
 
     def update_mapping_status(self, github_issue_no, jira_issue_key, status_message):

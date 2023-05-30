@@ -21,7 +21,7 @@ class InFileState(State):
             self._mapping_github_to_jira = {}
             self._mapping_jira_to_github = {}
             self._mapping_status_message = {}
-            self._last_sync_time = datetime.datetime.utcnow() - datetime.timedelta(days=365)
+            self._last_sync_time = datetime.datetime.utcnow() - datetime.timedelta(days=30)
 
     def get_jira_issue(self, github_issue_no):
         return self._mapping_github_to_jira.get(github_issue_no, None)

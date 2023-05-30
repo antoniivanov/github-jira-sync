@@ -1,4 +1,5 @@
 import abc
+import copy
 from typing import List
 
 from issues_sync.github_connection import GithubConnection
@@ -70,4 +71,8 @@ Only status and labels can be changed.
         jira_issue.comments = new_comments
 
     def create_jira_issue(self, github_issue: BaseIssue) -> str:
-        return self._jira_connection.create_issue(github_issue)
+        jira_issue = copy.deepcopy(github_issue)
+        jira_issue.key = None
+        self._update_issue_fields(jira_issue, github_issue)
+        self._update_comments(jira_issue, github_issue)
+        return self._jira_connection.create_issue(jira_issue)

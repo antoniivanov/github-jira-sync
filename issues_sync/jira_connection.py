@@ -26,7 +26,9 @@ class JiraConnection:
             self._jira = JIRA(config.url, basic_auth=(config.user, config.password))
         elif config.token:
             log.info("Connecting to Jira with token.")
-            self._jira = JIRA(config.url, token_auth=config.token)
+            #self._jira = JIRA(config.url, token_auth=config.token)
+            # https://community.atlassian.com/t5/Jira-questions/How-to-use-API-token-for-REST-calls-in-Python/qaq-p/760940
+            self._jira = JIRA(config.url, basic_auth=(config.user, config.token))
         else:
             log.info("Connecting to Jira without authentication.")
             self._jira = JIRA(config.url)
