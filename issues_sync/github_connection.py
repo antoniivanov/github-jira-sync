@@ -47,7 +47,7 @@ class GithubConnection:
         return None
 
     def get_issues(self, since_time: datetime.datetime) -> List[BaseIssue]:
-        github_issues = self._repo.get_issues(since=since_time)
+        github_issues = self._repo.get_issues(since=since_time, state="all")
         result = []
         for github_issue in github_issues:
             if github_issue.pull_request is not None:
